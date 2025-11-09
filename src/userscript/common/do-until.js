@@ -1,6 +1,4 @@
-if (!JsToolbox) {
-  JsToolbox = {}
-}
+JsToolbox = typeof JsToolbox === "undefined" ? {} : JsToolbox
 
 JsToolbox.doUntil = ({ intervalMs, maxRetries, callback }) => {
   return new Promise((resolve, reject) => {
