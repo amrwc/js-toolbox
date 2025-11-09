@@ -14,5 +14,8 @@
       }, intervalMs)
     })
   }
-  global.doUntil = doUntil
+  if (!global.JsToolbox) {
+    global.JsToolbox = {}
+  }
+  global.JsToolbox.doUntil = doUntil
 })(typeof unsafeWindow !== "undefined" ? unsafeWindow : window)
