@@ -14,7 +14,7 @@
     {
       "files": "*.md",
       "options": {
-        "printWidth": 79
+        "proseWrap": "never"
       }
     }
   ]
