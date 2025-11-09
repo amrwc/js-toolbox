@@ -14,7 +14,7 @@
       }, intervalMs)
     })
   }
-  if (global.JsToolbox === "undefined") {
+  if (!global.JsToolbox) {
     global.JsToolbox = {}
   }
   global.JsToolbox.doUntil = doUntil
