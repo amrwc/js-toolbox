@@ -1,17 +1,21 @@
 JsToolbox = typeof JsToolbox === "undefined" ? {} : JsToolbox
 
-JsToolbox.doUntil = ({ intervalMs, maxRetries, callback }) => {
-  return new Promise((resolve, reject) => {
-    let i = 0
-    const intervalId = setInterval(() => {
-      callback(res => {
-        clearInterval(intervalId)
-        resolve(res)
-      }, reject)
-      if (++i >= maxRetries) {
-        clearInterval(intervalId)
-        reject(new Error(`Reached maximum retry count: ${maxRetries}`))
+JsToolbox.doUntil = async ({
+  initDelayMs = 100,
+  maxRetries = 5,
+  factor = 2,
+  callback,
+}) => {
+  let delay = initDelayMs
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await callback()
+    } catch (err) {
+      if (i === maxRetries - 1) {
+        throw new Error(`Reached maximum retry count: ${maxRetries}`)
       }
-    }, intervalMs)
-  })
+      await new Promise(r => setTimeout(r, delay))
+      delay *= factor
+    }
+  }
 }
